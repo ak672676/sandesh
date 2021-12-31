@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "860579276109",
+    "project_id": "sandesh-f351c",
+    "storage_bucket": "sandesh-f351c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860579276109:android:17b2ae30e6340cf4bd0304",
+        "android_client_info": {
+          "package_name": "com.example.sandesh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860579276109-lf81v621mf641g3k430numm8epa12713.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sandesh",
+            "certificate_hash": "c5b0ff3a113c901a0e0afc4257e5b19c46cdf471"
+          }
+        },
+        {
+          "client_id": "860579276109-sv1tdi2fijbcgmel8l0sn6628bsnvvlu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcEXPWCbWXGiCD36m2lS_EtsEST0kEW3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860579276109-sv1tdi2fijbcgmel8l0sn6628bsnvvlu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
