@@ -5,6 +5,7 @@ import 'package:sandesh/responsive/mobile_screen_layout.dart';
 import 'package:sandesh/responsive/responsive_layout_screen.dart';
 import 'package:sandesh/responsive/web_screen_layout.dart';
 import 'package:sandesh/screens/login_screen.dart';
+import 'package:sandesh/screens/signup_screen.dart';
 import 'package:sandesh/utils/colors.dart';
 
 void main() async {
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       // home: const ResponsiveLayout(
       //     mobileScreenLayout: MobileScreenLayout(),
       //     webScreenLayout: WebScreenLayout()),
-      home: LoginScreen(),
+      home: SignUpScreen(),
     );
   }
 }
