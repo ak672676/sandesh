@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:sandesh/models/user.dart' as model;
 import 'package:sandesh/resources/storage_methods.dart';
 
 class AuthMethods {
@@ -30,20 +31,39 @@ class AuthMethods {
         String photoUrl = await StorageMethod()
             .uploadImageToStorage('profilePics', file, false);
 
-        await _firestore.collection('users').doc(cred.user!.uid).set({
-          'username': username,
-          "uid": cred.user!.uid,
-          "email": email,
-          "bio": bio,
-          'followers': [],
-          "followings": [],
-          "photoUrl": photoUrl,
-        });
+        model.User user = model.User(
+          username: username,
+          email: email,
+          uid: cred.user!.uid,
+          bio: bio,
+          photoUrl: photoUrl,
+          followers: [],
+          following: [],
+        );
+
+        await _firestore.collection('users').doc(cred.user!.uid).set(
+              user.toJson(),
+            );
 
         res = "Success";
       }
     } catch (err) {
       res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> loginUser(
+      {required String email, required String password}) async {
+    String res = "Some error occured";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = "Success";
+      }
+    } catch (err) {
+      res = "Please enter your email and password";
     }
     return res;
   }
