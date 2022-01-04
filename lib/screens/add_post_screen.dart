@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sandesh/models/user.dart';
 import 'package:sandesh/providers/user_provider.dart';
+import 'package:sandesh/resources/firestore_methods.dart';
 import 'package:sandesh/utils/colors.dart';
 import 'package:sandesh/utils/utils.dart';
 
@@ -17,6 +18,8 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
+  TextEditingController _descriptionsController = TextEditingController();
+  bool _isLoading = false;
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -44,10 +47,52 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     setState(() {
                       _file = file;
                     });
+                  }),
+              SimpleDialogOption(
+                  padding: const EdgeInsets.all(20),
+                  child: const Text("Cancel"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
                   })
             ],
           );
         });
+  }
+
+  void postImage(String uid, String username, String profImage) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      String res = await FirestoreMethods().uploadPost(
+          _descriptionsController.text, _file!, uid, username, profImage);
+      if (res == "Success") {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar("Posted", context);
+        clearImage();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(res, context);
+      }
+    } catch (err) {
+      showSnackBar(err.toString(), context);
+    }
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _descriptionsController.dispose();
   }
 
   @override
@@ -68,12 +113,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
               leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pop(context);
+                    clearImage();
                   }),
               title: Text("Add Post"),
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    postImage(user.uid, user.username, user.photoUrl);
+                  },
                   child: const Text(
                     "Post",
                     style: TextStyle(
@@ -85,6 +132,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ],
             ),
             body: Column(children: [
+              _isLoading
+                  ? const LinearProgressIndicator()
+                  : const Padding(padding: EdgeInsets.only(top: 0)),
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +144,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: TextField(
+                        controller: _descriptionsController,
                         decoration: const InputDecoration(
                           hintText: "What's on your mind?",
                           border: InputBorder.none,
