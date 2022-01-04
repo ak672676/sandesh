@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:sandesh/utils/colors.dart';
+import 'package:sandesh/utils/gloal_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -40,13 +41,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     return Scaffold(
       body: PageView(
         controller: pageController,
-        children: [
-          Text("Home"),
-          Text("Search"),
-          Text("Post"),
-          Text("Notifiction"),
-          Text("Profile"),
-        ],
+        children: homeScreenItems,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
