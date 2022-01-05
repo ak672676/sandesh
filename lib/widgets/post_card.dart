@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sandesh/models/user.dart';
 import 'package:sandesh/providers/user_provider.dart';
 import 'package:sandesh/resources/firestore_methods.dart';
+import 'package:sandesh/screens/comments_screen.dart';
 import 'package:sandesh/utils/colors.dart';
 import 'package:sandesh/widgets/like_animation.dart';
 
@@ -145,7 +146,10 @@ class _PostCardState extends State<PostCard> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.comment_outlined),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CommentsScreen()));
+                  },
                 ),
                 IconButton(
                   icon: const Icon(Icons.share),
