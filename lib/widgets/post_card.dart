@@ -95,8 +95,10 @@ class _PostCardState extends State<PostCard> {
                                   ),
                                   ListTile(
                                     title: Text("Delete"),
-                                    onTap: () {
-                                      Navigator.pop(context);
+                                    onTap: () async {
+                                      FirestoreMethods()
+                                          .deletePost(widget.snap["postId"]);
+                                      Navigator.of(context).pop();
                                     },
                                   ),
                                 ],
