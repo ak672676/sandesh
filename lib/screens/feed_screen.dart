@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_svg/svg.dart';
 import 'package:sandesh/utils/colors.dart';
+import 'package:sandesh/utils/gloal_variables.dart';
 import 'package:sandesh/widgets/post_card.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -9,19 +10,23 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        centerTitle: false,
-        title: SvgPicture.asset("assets/ic_instagram.svg",
-            color: primaryColor, height: 32),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.messenger_outline),
-          )
-        ],
-      ),
+      appBar: width > webScreenSize
+          ? null
+          : AppBar(
+              backgroundColor: mobileBackgroundColor,
+              centerTitle: false,
+              title: SvgPicture.asset("assets/ic_instagram.svg",
+                  color: primaryColor, height: 32),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.messenger_outline),
+                )
+              ],
+            ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('posts').snapshots(),
           builder: (context,

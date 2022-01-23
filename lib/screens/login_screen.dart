@@ -6,6 +6,7 @@ import 'package:sandesh/responsive/responsive_layout_screen.dart';
 import 'package:sandesh/responsive/web_screen_layout.dart';
 import 'package:sandesh/screens/signup_screen.dart';
 import 'package:sandesh/utils/colors.dart';
+import 'package:sandesh/utils/gloal_variables.dart';
 import 'package:sandesh/utils/utils.dart';
 import 'package:sandesh/widgets/text_field_input.dart';
 
@@ -61,7 +62,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 32),
+                padding: MediaQuery.of(context).size.width > webScreenSize
+                    ? EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 3)
+                    : const EdgeInsets.symmetric(horizontal: 32),
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
